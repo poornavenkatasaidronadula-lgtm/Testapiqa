@@ -3,45 +3,8 @@ import { Link } from 'react-router-dom';
 import { MdOutlineStorefront } from 'react-icons/md';
 
 export default function Footer() {
-  const [email, setEmail] = React.useState('');
-  const [subscribed, setSubscribed] = React.useState(false);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail('');
-      setTimeout(() => setSubscribed(false), 3000);
-    }
-  };
-
   return (
     <>
-      {/* Newsletter */}
-      <section className="newsletter-section">
-        <div className="container">
-          <div className="newsletter-inner">
-            <div className="newsletter-text">
-              <h3>📬 Stay in the Loop</h3>
-              <p>Get the most recent updates from our site and be updated yourself...</p>
-            </div>
-            <form className="newsletter-form" onSubmit={handleSubscribe}>
-              <input
-                className="newsletter-input"
-                type="email"
-                placeholder="Enter your email address..."
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-              />
-              <button type="submit" className="newsletter-btn">
-                {subscribed ? '✅ Subscribed!' : 'Subscribe'}
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="footer">
         <div className="container">
@@ -56,6 +19,7 @@ export default function Footer() {
                 Full-fledged practice website for QA Engineers. All testers can use
                 this website for automation practice and API testing at any skill level.
               </p>
+
             </div>
 
             {/* Quick Links */}
