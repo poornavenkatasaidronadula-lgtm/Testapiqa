@@ -93,8 +93,24 @@ export default function TestCases() {
                 </span>
               </div>
               {expanded === tc.id && (
-                <div className="test-case-body">
-                  <p><strong>Steps:</strong> {tc.description}</p>
+                <div className="test-case-body" style={{ padding: 0, backgroundColor: '#fff', borderTop: '2px solid var(--orange-main)' }}>
+                  <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                    {tc.description.split(', ').map((step, idx) => {
+                      const cleanStep = step.trim().replace(/\.$/, '');
+                      return (
+                        <li key={idx} style={{ 
+                          padding: '16px 24px', 
+                          borderBottom: '1px solid #e0e0e0',
+                          color: '#333',
+                          fontSize: '0.95rem',
+                          fontWeight: '400',
+                          lineHeight: '1.5'
+                        }}>
+                          {idx + 1}. {cleanStep.charAt(0).toUpperCase() + cleanStep.slice(1)}
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               )}
             </div>
