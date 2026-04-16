@@ -35,91 +35,13 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="hero-section">
-        <div className="container">
-          <div className="hero-content">
-            <div className="hero-text">
-              <span className="hero-badge">🚀 Practice Website for QA Engineers</span>
-              <h1 className="hero-title">
-                Full-Fledged Practice Website for <span>Testapiqa</span>
-              </h1>
-              <p className="hero-description">
-                All QA engineers can use this website for automation practice and API testing —
-                whether they are at beginner or advanced level. This is for everybody to help
-                them brush up their automation skills.
-              </p>
-              <div className="hero-buttons">
-                <Link to="/test-cases" className="hero-cta">
-                  📋 Test Cases
-                </Link>
-                <a
-                  href="/test-cases"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hero-cta-outline"
-                >
-                  🔌 APIs List for Practice
-                </a>
-              </div>
-              <div className="hero-stat-row">
-                <div className="hero-stat">
-                  <div className="number">26+</div>
-                  <div className="label">Test Cases</div>
-                </div>
-                <div className="hero-stat">
-                  <div className="number">24+</div>
-                  <div className="label">API Endpoints</div>
-                </div>
-                <div className="hero-stat">
-                  <div className="number">100K+</div>
-                  <div className="label">QA Professionals</div>
-                </div>
-                <div className="hero-stat">
-                  <div className="number">FREE</div>
-                  <div className="label">Always Free</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="hero-image-area">
-              <div className="hero-card-grid">
-                <div className="hero-card">
-                  <div className="icon">👗</div>
-                  <h4>Women's Fashion</h4>
-                  <p>Tops, Dresses & Sarees</p>
-                </div>
-                <div className="hero-card">
-                  <div className="icon">👔</div>
-                  <h4>Men's Collection</h4>
-                  <p>T-shirts & Jeans</p>
-                </div>
-                <div className="hero-card">
-                  <div className="icon">🧒</div>
-                  <h4>Kids' Wear</h4>
-                  <p>Cute & Trendy</p>
-                </div>
-                <div className="hero-card">
-                  <div className="icon">🔌</div>
-                  <h4>API Testing</h4>
-                  <p>24+ Endpoints</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Features Bar */}
       <section className="features-bar">
         <div className="container">
           <div className="features-bar-grid">
             <div className="feature-bar-item">
-              <div className="icon-wrap"><FiTruck /></div>
-              <div>
-                <h4>Free Delivery</h4>
-                <p>On all orders over Rs. 500</p>
-              </div>
+
             </div>
             <div className="feature-bar-item">
               <div className="icon-wrap"><FiRefreshCw /></div>
