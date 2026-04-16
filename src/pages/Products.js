@@ -201,7 +201,7 @@ export default function Products() {
                 </button>
               </div>
             ) : (
-              <div className="product-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+              <div className="product-grid">
                 {filtered.map(product => (
                   <ProductCard key={product.id} product={product} showToast={showToast} />
                 ))}

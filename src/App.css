@@ -450,6 +450,12 @@
   gap: 24px;
 }
 
+@media (min-width: 769px) {
+  .products-page-layout .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .product-card {
   background: #fff;
   border-radius: var(--radius-lg);
