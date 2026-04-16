@@ -57,11 +57,11 @@ export default function Footer() {
                 this website for automation practice and API testing at any skill level.
               </p>
               <div className="footer-social">
-                <a href="#" className="footer-social-btn" title="Facebook">📘</a>
-                <a href="#" className="footer-social-btn" title="Twitter">🐦</a>
+                <Link to="/" className="footer-social-btn" title="Facebook">📘</Link>
+                <Link to="/" className="footer-social-btn" title="Twitter">🐦</Link>
                 <a href="https://www.youtube.com/results?search_query=testapiqa" target="_blank" rel="noreferrer" className="footer-social-btn" title="YouTube">▶️</a>
-                <a href="#" className="footer-social-btn" title="Instagram">📸</a>
-                <a href="#" className="footer-social-btn" title="LinkedIn">💼</a>
+                <Link to="/" className="footer-social-btn" title="Instagram">📸</Link>
+                <Link to="/" className="footer-social-btn" title="LinkedIn">💼</Link>
               </div>
             </div>
 
@@ -95,12 +95,12 @@ export default function Footer() {
             <div className="footer-col">
               <h4>Information</h4>
               <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms & Conditions</a></li>
-                <li><a href="#">Return Policy</a></li>
-                <li><a href="#">Shipping Info</a></li>
-                <li><a href="/test-cases" target="_blank" rel="noreferrer">API List</a></li>
+                <li><Link to="/">About Us</Link></li>
+                <li><Link to="/">Privacy Policy</Link></li>
+                <li><Link to="/">Terms & Conditions</Link></li>
+                <li><Link to="/">Return Policy</Link></li>
+                <li><Link to="/">Shipping Info</Link></li>
+                <li><Link to="/test-cases">API List</Link></li>
               </ul>
             </div>
           </div>
@@ -108,9 +108,9 @@ export default function Footer() {
           <div className="footer-bottom">
             <p>© {new Date().getFullYear()} Testapiqa. All rights reserved.</p>
             <div className="footer-bottom-links">
-              <a href="#">Privacy</a>
-              <a href="#">Terms</a>
-              <a href="#">Sitemap</a>
+              <Link to="/">Privacy</Link>
+              <Link to="/">Terms</Link>
+              <Link to="/">Sitemap</Link>
             </div>
           </div>
         </div>
