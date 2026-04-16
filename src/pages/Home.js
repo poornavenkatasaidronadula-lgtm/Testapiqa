@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { products } from '../data/products';
 import ProductCard from '../components/ProductCard';
-import { FiArrowRight, FiShield, FiTruck, FiRefreshCw, FiHeadphones } from 'react-icons/fi';
-
+import { FiArrowRight } from 'react-icons/fi';
 function Toast({ message, onClose }) {
   useEffect(() => {
     const t = setTimeout(onClose, 3000);
