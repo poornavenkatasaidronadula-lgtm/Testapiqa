@@ -1434,6 +1434,7 @@ textarea.form-input { resize: vertical; min-height: 120px; }
   .cart-layout { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .product-detail-layout { grid-template-columns: 1fr; }
+  .product-images { position: relative; top: 0; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .auth-card { margin: 0 16px; }
   .products-page-layout { grid-template-columns: 1fr; }
