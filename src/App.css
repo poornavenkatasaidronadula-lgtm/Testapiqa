@@ -1441,7 +1441,9 @@ textarea.form-input { resize: vertical; min-height: 120px; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
   .newsletter-form { flex-direction: column; }
+  .search-bar { flex-direction: column; }
   .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .products-toolbar { flex-direction: column; align-items: flex-start; gap: 16px; }
 }
 
 @media (max-width: 480px) {
