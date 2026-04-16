@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CartContext, AuthContext } from '../App';
-import { FiShoppingCart, FiUser, FiHeart, FiMenu, FiX, FiSearch } from 'react-icons/fi';
+import { FiShoppingCart, FiUser } from 'react-icons/fi';
 import { MdOutlineStorefront } from 'react-icons/md';
 
 export default function Navbar() {

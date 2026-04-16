@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { products, brands } from '../data/products';
 import ProductCard from '../components/ProductCard';
-import { FiSearch, FiFilter } from 'react-icons/fi';
+import { FiSearch } from 'react-icons/fi';
 
 function Toast({ message, onClose }) {
   useEffect(() => {

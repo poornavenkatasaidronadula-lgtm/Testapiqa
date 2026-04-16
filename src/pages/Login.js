@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../App';
-import { FiMail, FiLock, FiUser } from 'react-icons/fi';
+import { FiMail, FiLock } from 'react-icons/fi';
 
 export default function Login() {
   const { login } = useContext(AuthContext);
@@ -84,9 +84,9 @@ export default function Login() {
                 </div>
               </div>
               <div style={{ textAlign: 'right', marginBottom: '16px' }}>
-                <a href="#" style={{ fontSize: '0.82rem', color: 'var(--primary)', fontWeight: 600 }}>
+                <Link to="/login" style={{ fontSize: '0.82rem', color: 'var(--primary)', fontWeight: 600 }}>
                   Forgot Password?
-                </a>
+                </Link>
               </div>
               <button type="submit" className="form-submit" disabled={loading}>
                 {loading ? '⏳ Signing in...' : '🔐 Login'}

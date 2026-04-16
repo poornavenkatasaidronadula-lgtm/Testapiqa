@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { CartContext, AuthContext } from '../App';
+import { CartContext } from '../App';
 import { FiHeart, FiShoppingCart, FiEye } from 'react-icons/fi';
 
 export default function ProductCard({ product, showToast }) {
