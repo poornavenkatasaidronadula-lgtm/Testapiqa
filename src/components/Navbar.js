@@ -42,7 +42,7 @@ export default function Navbar() {
               </li>
             ))}
             <li>
-              <a href="https://www.youtube.com/results?search_query=testapiqa" target="_blank" rel="noreferrer" className="nav-link">
+              <a href="https://youtube.com/@qaframeworkfactory?si=KK5aYvaQXEGWCCxd" target="_blank" rel="noreferrer" className="nav-link">
                 Video Tutorials
               </a>
             </li>
@@ -95,6 +95,15 @@ export default function Navbar() {
               {link.icon} {link.label}
             </Link>
           ))}
+          <a
+            href="https://youtube.com/@qaframeworkfactory?si=KK5aYvaQXEGWCCxd"
+            target="_blank"
+            rel="noreferrer"
+            className="nav-link"
+            onClick={() => setMobileOpen(false)}
+          >
+            ▶️ Video Tutorials
+          </a>
           {!user && (
             <Link to="/login" className="nav-link" onClick={() => setMobileOpen(false)}>
               👤 Signup / Login
