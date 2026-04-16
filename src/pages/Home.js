@@ -35,39 +35,6 @@ export default function Home() {
 
   return (
     <>
-
-      {/* Features Bar */}
-      <section className="features-bar">
-        <div className="container">
-          <div className="features-bar-grid">
-            <div className="feature-bar-item">
-
-            </div>
-            <div className="feature-bar-item">
-              <div className="icon-wrap"><FiRefreshCw /></div>
-              <div>
-                <h4>Easy Returns</h4>
-                <p>30 day return policy</p>
-              </div>
-            </div>
-            <div className="feature-bar-item">
-              <div className="icon-wrap"><FiShield /></div>
-              <div>
-                <h4>Secure Payment</h4>
-                <p>100% secure transactions</p>
-              </div>
-            </div>
-            <div className="feature-bar-item">
-              <div className="icon-wrap"><FiHeadphones /></div>
-              <div>
-                <h4>24/7 Support</h4>
-                <p>Dedicated customer support</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Categories */}
       <section className="categories-section">
         <div className="container">
