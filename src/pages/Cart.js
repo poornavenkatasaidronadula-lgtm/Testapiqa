@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { CartContext } from '../App';
+import { CartContext, AuthContext } from '../App';
 import { FiTrash2, FiShoppingBag, FiArrowLeft } from 'react-icons/fi';
 
 export default function Cart() {
   const { cartItems, removeFromCart, updateQty } = useContext(CartContext);
+  const { user } = useContext(AuthContext);
+  const [showAuthModal, setShowAuthModal] = React.useState(false);
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
   const shipping = subtotal > 500 ? 0 : 50;
@@ -101,7 +103,10 @@ export default function Cart() {
                   <span>Total</span>
                   <span className="amount">Rs. {total.toLocaleString()}</span>
                 </div>
-                <button className="checkout-btn">
+                <button className="checkout-btn" onClick={() => {
+                  if (!user) setShowAuthModal(true);
+                  else alert('Order placed successfully! (Checkout flow placeholder)');
+                }}>
                   🛍️ Proceed to Checkout
                 </button>
                 <div style={{ textAlign: 'center', marginTop: '14px', fontSize: '0.78rem', color: 'var(--text-gray)' }}>
@@ -112,6 +117,20 @@ export default function Cart() {
           </div>
         </div>
       </div>
+
+      {showAuthModal && (
+        <>
+          <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', zIndex: 9998 }} onClick={() => setShowAuthModal(false)} />
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '30px', borderRadius: '8px', zIndex: 9999, width: '90%', maxWidth: '400px', textAlign: 'center', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
+            <h3 style={{ marginBottom: '15px' }}>Checkout Information</h3>
+            <p style={{ color: '#555', marginBottom: '24px' }}>Register / Login account to proceed on checkout.</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+               <Link to="/login" className="btn-primary" style={{ padding: '12px', textDecoration: 'none', background: 'var(--primary)', color: '#fff', borderRadius: '4px', fontWeight: 600 }}>Register / Login</Link>
+               <button onClick={() => setShowAuthModal(false)} style={{ padding: '12px', background: 'transparent', color: '#555', border: '1px solid #ccc', borderRadius: '4px', fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
