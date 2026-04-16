@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../App';
 import { FiHeart, FiShoppingCart, FiEye } from 'react-icons/fi';
@@ -51,19 +52,20 @@ export default function ProductCard({ product, showToast }) {
           </div>
         </div>
       </div>
-      {showModal && (
+      {showModal && ReactDOM.createPortal(
         <>
-          <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', zIndex: 9998 }} onClick={() => setShowModal(false)} />
+          <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.5)', zIndex: 9998 }} onClick={() => setShowModal(false)} />
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '30px', borderRadius: '8px', zIndex: 9999, width: '90%', maxWidth: '400px', textAlign: 'center', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
             <div style={{ fontSize: '3rem', color: '#16a34a', marginBottom: '10px' }}>✓</div>
-            <h3 style={{ marginBottom: '10px' }}>Added!</h3>
+            <h3 style={{ marginBottom: '10px', color: '#000' }}>Added!</h3>
             <p style={{ color: '#555', marginBottom: '24px' }}>Your product has been added to cart.</p>
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
                <Link to="/cart" className="btn-primary" style={{ padding: '10px 20px', textDecoration: 'none', background: 'var(--primary)', color: '#fff', borderRadius: '4px', border: 'none', fontWeight: 600 }}>View Cart</Link>
                <button onClick={() => setShowModal(false)} style={{ padding: '10px 20px', background: '#e0e0e0', color: '#333', borderRadius: '4px', border: 'none', fontWeight: 600, cursor: 'pointer' }}>Continue</button>
             </div>
           </div>
-        </>
+        </>,
+        document.body
       )}
     </div>
   );

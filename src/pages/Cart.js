@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { CartContext, AuthContext } from '../App';
 import { FiTrash2, FiShoppingBag, FiArrowLeft } from 'react-icons/fi';
@@ -118,18 +119,19 @@ export default function Cart() {
         </div>
       </div>
 
-      {showAuthModal && (
+      {showAuthModal && ReactDOM.createPortal(
         <>
-          <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', zIndex: 9998 }} onClick={() => setShowAuthModal(false)} />
+          <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.5)', zIndex: 9998 }} onClick={() => setShowAuthModal(false)} />
           <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '30px', borderRadius: '8px', zIndex: 9999, width: '90%', maxWidth: '400px', textAlign: 'center', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
-            <h3 style={{ marginBottom: '15px' }}>Checkout Information</h3>
+            <h3 style={{ marginBottom: '15px', color: '#000' }}>Checkout Information</h3>
             <p style={{ color: '#555', marginBottom: '24px' }}>Register / Login account to proceed on checkout.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                <Link to="/login" className="btn-primary" style={{ padding: '12px', textDecoration: 'none', background: 'var(--primary)', color: '#fff', borderRadius: '4px', fontWeight: 600 }}>Register / Login</Link>
                <button onClick={() => setShowAuthModal(false)} style={{ padding: '12px', background: 'transparent', color: '#555', border: '1px solid #ccc', borderRadius: '4px', fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
             </div>
           </div>
-        </>
+        </>,
+        document.body
       )}
     </>
   );
