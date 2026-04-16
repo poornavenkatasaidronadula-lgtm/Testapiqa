@@ -1,24 +1,108 @@
-import logo from './logo.svg';
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useParams } from 'react-router-dom';
 import './App.css';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Products from './pages/Products';
+import ProductDetail from './pages/ProductDetail';
+import Cart from './pages/Cart';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Contact from './pages/Contact';
+import TestCases from './pages/TestCases';
+
+export const CartContext = createContext();
+export const AuthContext = createContext();
 
 function App() {
+  const [cartItems, setCartItems] = useState([]);
+  const [user, setUser] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem('ae_cart');
+    const savedUser = localStorage.getItem('ae_user');
+    const savedWishlist = localStorage.getItem('ae_wishlist');
+    if (savedCart) setCartItems(JSON.parse(savedCart));
+    if (savedUser) setUser(JSON.parse(savedUser));
+    if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
+  }, []);
+
+  const addToCart = (product, quantity = 1) => {
+    setCartItems(prev => {
+      const existing = prev.find(i => i.id === product.id);
+      let updated;
+      if (existing) {
+        updated = prev.map(i => i.id === product.id ? { ...i, qty: i.qty + quantity } : i);
+      } else {
+        updated = [...prev, { ...product, qty: quantity }];
+      }
+      localStorage.setItem('ae_cart', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const removeFromCart = (id) => {
+    setCartItems(prev => {
+      const updated = prev.filter(i => i.id !== id);
+      localStorage.setItem('ae_cart', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const updateQty = (id, qty) => {
+    if (qty < 1) return;
+    setCartItems(prev => {
+      const updated = prev.map(i => i.id === id ? { ...i, qty } : i);
+      localStorage.setItem('ae_cart', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const toggleWishlist = (product) => {
+    setWishlist(prev => {
+      const exists = prev.find(i => i.id === product.id);
+      const updated = exists ? prev.filter(i => i.id !== product.id) : [...prev, product];
+      localStorage.setItem('ae_wishlist', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem('ae_user', JSON.stringify(userData));
+  };
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('ae_user');
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthContext.Provider value={{ user, login, logout }}>
+      <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQty, wishlist, toggleWishlist }}>
+        <Router>
+          <div className="app-wrapper">
+            <Navbar />
+            <main className="main-content">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/products/:category" element={<Products />} />
+                <Route path="/product/:id" element={<ProductDetail />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/test-cases" element={<TestCases />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </CartContext.Provider>
+    </AuthContext.Provider>
   );
 }
 
