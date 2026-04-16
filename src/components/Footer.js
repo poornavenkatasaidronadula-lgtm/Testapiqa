@@ -56,13 +56,6 @@ export default function Footer() {
                 Full-fledged practice website for QA Engineers. All testers can use
                 this website for automation practice and API testing at any skill level.
               </p>
-              <div className="footer-social">
-                <Link to="/" className="footer-social-btn" title="Facebook">📘</Link>
-                <Link to="/" className="footer-social-btn" title="Twitter">🐦</Link>
-                <a href="https://www.youtube.com/results?search_query=testapiqa" target="_blank" rel="noreferrer" className="footer-social-btn" title="YouTube">▶️</a>
-                <Link to="/" className="footer-social-btn" title="Instagram">📸</Link>
-                <Link to="/" className="footer-social-btn" title="LinkedIn">💼</Link>
-              </div>
             </div>
 
             {/* Quick Links */}
