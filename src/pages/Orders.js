@@ -9,6 +9,7 @@ export default function Orders() {
   const { user } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deletingOrderId, setDeletingOrderId] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -27,15 +28,19 @@ export default function Orders() {
     }
   }, [user]);
 
-  const handleDeleteOrder = async (orderId) => {
-    if (!window.confirm("Are you sure you want to delete this order?")) return;
+  const confirmDelete = (orderId) => {
+    setDeletingOrderId(orderId);
+  };
+
+  const handleDeleteOrder = async () => {
+    if (!deletingOrderId) return;
     
     try {
-      const response = await fetch(`${API_URL}/api/orders/${orderId}`, {
+      const response = await fetch(`${API_URL}/api/orders/${deletingOrderId}`, {
         method: 'DELETE',
       });
       if (response.ok) {
-        setOrders(prev => prev.filter(o => o.id !== orderId));
+        setOrders(prev => prev.filter(o => o.id !== deletingOrderId));
       } else {
         alert("Failed to delete order.");
       }
@@ -43,6 +48,7 @@ export default function Orders() {
       console.error(err);
       alert("Error deleting order.");
     }
+    setDeletingOrderId(null);
   };
 
   const getStatusColor = (status) => {
@@ -180,7 +186,7 @@ export default function Orders() {
                       Total: <strong style={{ color: 'var(--primary)' }}>Rs. {order.total?.toLocaleString()}</strong>
                     </span>
                     <button 
-                      onClick={() => handleDeleteOrder(order.id)}
+                      onClick={() => confirmDelete(order.id)}
                       style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '6px', borderRadius: '4px' }}
                       title="Delete Order"
                       onMouseOver={e => e.currentTarget.style.background = '#fee2e2'}
@@ -235,6 +241,37 @@ export default function Orders() {
           </div>
         </div>
       </div>
+
+      {/* Custom Delete Confirmation Modal */}
+      {deletingOrderId && (
+        <div className="modal-overlay" onClick={() => setDeletingOrderId(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '400px', width: '100%', textAlign: 'center' }}>
+            <div style={{ width: '60px', height: '60px', background: '#fee2e2', color: '#ef4444', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: '1.5rem' }}>
+              <FiTrash2 />
+            </div>
+            <h3 style={{ marginBottom: '12px', fontSize: '1.3rem', color: 'var(--text-dark)' }}>Delete Order?</h3>
+            <p style={{ color: 'var(--text-gray)', marginBottom: '24px', lineHeight: '1.5' }}>
+              Are you sure you want to permanently delete this order? This action cannot be undone.
+            </p>
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+              <button 
+                className="btn-outline-primary" 
+                style={{ flex: 1, padding: '10px' }} 
+                onClick={() => setDeletingOrderId(null)}
+              >
+                Cancel
+              </button>
+              <button 
+                className="btn-primary" 
+                style={{ flex: 1, padding: '10px', background: '#ef4444', borderColor: '#ef4444' }} 
+                onClick={handleDeleteOrder}
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
