@@ -14,7 +14,7 @@ export default function Navbar() {
     { to: '/', label: 'Home', icon: <FiHome /> },
     { to: '/products', label: 'Products', icon: <FiGrid /> },
     { to: '/test-cases', label: 'Test Cases', icon: <FiClipboard /> },
-    { to: '/contact', label: 'Enroll Now', icon: <FiUser /> },
+    { to: 'https://topmate.io/qaframeworkfactory/2052890', label: 'Enroll Now', icon: <FiUser />, external: true },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -33,13 +33,19 @@ export default function Navbar() {
           <ul className="navbar-nav">
             {navLinks.map(link => (
               <li key={link.to}>
-                <Link
-                  to={link.to}
-                  className={`nav-link ${isActive(link.to) ? 'active' : ''}`}
-                  style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
-                >
-                  {link.icon} {link.label}
-                </Link>
+                {link.external ? (
+                  <a href={link.to} target="_blank" rel="noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    {link.icon} {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    to={link.to}
+                    className={`nav-link ${isActive(link.to) ? 'active' : ''}`}
+                    style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
+                  >
+                    {link.icon} {link.label}
+                  </Link>
+                )}
               </li>
             ))}
             <li>
@@ -97,15 +103,29 @@ export default function Navbar() {
         {/* Mobile Menu */}
         <div className={`mobile-menu${mobileOpen ? ' open' : ''}`}>
           {navLinks.map(link => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={`nav-link ${isActive(link.to) ? 'active' : ''}`}
-              onClick={() => setMobileOpen(false)}
-              style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-            >
-              {link.icon} {link.label}
-            </Link>
+            link.external ? (
+              <a
+                key={link.to}
+                href={link.to}
+                target="_blank"
+                rel="noreferrer"
+                className="nav-link"
+                onClick={() => setMobileOpen(false)}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+              >
+                {link.icon} {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`nav-link ${isActive(link.to) ? 'active' : ''}`}
+                onClick={() => setMobileOpen(false)}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+              >
+                {link.icon} {link.label}
+              </Link>
+            )
           ))}
           <a
             href="https://youtube.com/@qaframeworkfactory?si=KK5aYvaQXEGWCCxd"
