@@ -41,6 +41,16 @@ export default function Products() {
 
   const toggleGroup = (g) => setOpenGroups(prev => ({ ...prev, [g]: !prev[g] }));
 
+  const handleCategorySelect = (cat) => {
+    setSelectedCategory(cat);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBrandSelect = (brand) => {
+    setSelectedBrand(brand);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   let filtered = products;
   if (search) {
     filtered = filtered.filter(p =>
@@ -114,7 +124,7 @@ export default function Products() {
               <div className="sidebar-card-body">
                 <div
                   className={`sidebar-category-item ${selectedCategory === 'All' ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory('All')}
+                  onClick={() => handleCategorySelect('All')}
                 >
                   All Products
                   <span className="count">{products.length}</span>
@@ -129,7 +139,7 @@ export default function Products() {
                       <div
                         key={sub}
                         className={`sidebar-brand-item ${selectedCategory === sub ? 'active' : ''}`}
-                        onClick={() => setSelectedCategory(sub)}
+                        onClick={() => handleCategorySelect(sub)}
                         style={selectedCategory === sub ? { color: 'var(--primary)', background: 'var(--orange-light)' } : {}}
                       >
                         {sub}
@@ -149,7 +159,7 @@ export default function Products() {
               <div className="sidebar-card-body">
                 <div
                   className={`sidebar-category-item ${selectedBrand === '' ? 'active' : ''}`}
-                  onClick={() => setSelectedBrand('')}
+                  onClick={() => handleBrandSelect('')}
                 >
                   All Brands
                   <span className="count">
@@ -178,7 +188,7 @@ export default function Products() {
                     <div
                       key={brand.name}
                       className={`sidebar-brand-item ${selectedBrand === brand.name ? 'active' : ''}`}
-                      onClick={() => setSelectedBrand(brand.name === selectedBrand ? '' : brand.name)}
+                      onClick={() => handleBrandSelect(brand.name === selectedBrand ? '' : brand.name)}
                       style={selectedBrand === brand.name ? { color: 'var(--primary)', background: 'var(--orange-light)' } : { opacity: actualCount === 0 ? 0.5 : 1 }}
                     >
                       {brand.name}
@@ -216,7 +226,12 @@ export default function Products() {
                 <p>Try adjusting your search or filter criteria</p>
                 <button
                   className="btn-primary"
-                  onClick={() => { setSearch(''); setSelectedCategory('All'); setSelectedBrand(''); }}
+                  onClick={() => { 
+                    setSearch(''); 
+                    setSelectedCategory('All'); 
+                    setSelectedBrand(''); 
+                    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+                  }}
                 >
                   Clear Filters
                 </button>
