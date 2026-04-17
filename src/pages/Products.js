@@ -152,19 +152,40 @@ export default function Products() {
                   onClick={() => setSelectedBrand('')}
                 >
                   All Brands
-                  <span className="count">{brands.length}</span>
+                  <span className="count">
+                    {(() => {
+                      let temp = products;
+                      if (selectedCategory && selectedCategory !== 'All') {
+                        temp = temp.filter(p => p.category.toLowerCase() === selectedCategory.toLowerCase() || p.subcategory.toLowerCase() === selectedCategory.toLowerCase());
+                      }
+                      return temp.length;
+                    })()}
+                  </span>
                 </div>
-                {brands.map(brand => (
-                  <div
-                    key={brand.name}
-                    className={`sidebar-brand-item ${selectedBrand === brand.name ? 'active' : ''}`}
-                    onClick={() => setSelectedBrand(brand.name)}
-                    style={selectedBrand === brand.name ? { color: 'var(--primary)', background: 'var(--orange-light)' } : {}}
-                  >
-                    {brand.name}
-                    <span>({brand.count})</span>
-                  </div>
-                ))}
+                {brands.map(brand => {
+                  let contextProducts = products;
+                  if (selectedCategory && selectedCategory !== 'All') {
+                    contextProducts = contextProducts.filter(p => 
+                      p.category.toLowerCase() === selectedCategory.toLowerCase() || 
+                      p.subcategory.toLowerCase() === selectedCategory.toLowerCase()
+                    );
+                  }
+                  const actualCount = contextProducts.filter(p => p.brand === brand.name).length;
+                  
+                  if (actualCount === 0 && selectedBrand !== brand.name) return null;
+                  
+                  return (
+                    <div
+                      key={brand.name}
+                      className={`sidebar-brand-item ${selectedBrand === brand.name ? 'active' : ''}`}
+                      onClick={() => setSelectedBrand(brand.name === selectedBrand ? '' : brand.name)}
+                      style={selectedBrand === brand.name ? { color: 'var(--primary)', background: 'var(--orange-light)' } : { opacity: actualCount === 0 ? 0.5 : 1 }}
+                    >
+                      {brand.name}
+                      <span>({actualCount})</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </aside>
