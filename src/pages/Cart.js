@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CartContext, AuthContext } from '../App';
 import { FiTrash2, FiShoppingBag, FiArrowLeft, FiPackage } from 'react-icons/fi';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
 
 export default function Cart() {
   const { cartItems, removeFromCart, updateQty, clearCart } = useContext(CartContext);

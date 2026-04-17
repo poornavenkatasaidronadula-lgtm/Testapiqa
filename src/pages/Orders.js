@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../App';
 import { FiPackage, FiShoppingBag, FiCalendar, FiMapPin, FiTrash2 } from 'react-icons/fi';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
 
 export default function Orders() {
   const { user } = useContext(AuthContext);
