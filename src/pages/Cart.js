@@ -156,7 +156,7 @@ export default function Cart() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div className="form-group">
                   <label className="form-label">First name *</label>
-                  <input type="text" className="form-input" required defaultValue={user.firstName || user.name || ''} />
+                  <input type="text" className="form-input" required defaultValue={user.firstName || ''} />
                 </div>
                 <div className="form-group">
                   <label className="form-label">Last name *</label>
