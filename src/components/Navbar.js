@@ -14,7 +14,7 @@ export default function Navbar() {
     { to: '/', label: 'Home', icon: <FiHome /> },
     { to: '/products', label: 'Products', icon: <FiGrid /> },
     { to: '/test-cases', label: 'Test Cases', icon: <FiClipboard /> },
-    { to: '/contact', label: 'Contact us', icon: <FiMail /> },
+    { to: '/contact', label: 'Enroll Now', icon: <FiUser /> },
   ];
 
   const isActive = (path) => location.pathname === path;
