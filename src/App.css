@@ -612,8 +612,16 @@
 .sidebar {
   position: sticky;
   top: 88px;
-  height: fit-content;
+  height: calc(100vh - 110px);
+  overflow-y: auto;
+  padding-right: 8px; /* space for scrollbar */
 }
+
+/* Custom Scrollbar for the main sidebar */
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+.sidebar::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
 .sidebar-card {
   background: #fff;
