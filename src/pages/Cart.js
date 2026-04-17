@@ -57,18 +57,21 @@ export default function Cart() {
                 🛒 My Cart ({cartItems.length} item{cartItems.length !== 1 ? 's' : ''})
               </div>
               {cartItems.map(item => (
-                <div key={item.id} className="cart-item">
+                <div key={item.cartItemId || item.id} className="cart-item">
                   <img src={item.image} alt={item.name} className="cart-item-img" />
                   <div>
-                    <div className="cart-item-name">{item.name}</div>
+                    <div className="cart-item-name">
+                      {item.name}
+                      {item.selectedSize && <span style={{ fontSize: '0.8rem', color: '#666', marginLeft: '6px' }}>(Size: {item.selectedSize})</span>}
+                    </div>
                     <div className="cart-item-price">Rs. {item.price.toLocaleString()}</div>
                     <div className="qty-control">
-                      <button className="qty-btn" onClick={() => updateQty(item.id, item.qty - 1)}>−</button>
+                      <button className="qty-btn" onClick={() => updateQty(item.cartItemId || item.id, item.qty - 1)}>−</button>
                       <span className="qty-value">{item.qty}</span>
-                      <button className="qty-btn" onClick={() => updateQty(item.id, item.qty + 1)}>+</button>
+                      <button className="qty-btn" onClick={() => updateQty(item.cartItemId || item.id, item.qty + 1)}>+</button>
                     </div>
                   </div>
-                  <button className="cart-remove-btn" onClick={() => removeFromCart(item.id)} title="Remove">
+                  <button className="cart-remove-btn" onClick={() => removeFromCart(item.cartItemId || item.id)} title="Remove">
                     <FiTrash2 />
                   </button>
                 </div>
@@ -80,8 +83,8 @@ export default function Cart() {
               <div className="cart-summary-header">🏷️ Order Summary</div>
               <div className="cart-summary-body">
                 {cartItems.map(item => (
-                  <div key={item.id} className="summary-row">
-                    <span style={{ fontSize: '0.85rem' }}>{item.name} × {item.qty}</span>
+                  <div key={item.cartItemId || item.id} className="summary-row">
+                    <span style={{ fontSize: '0.85rem' }}>{item.name} {item.selectedSize && `(${item.selectedSize})`} × {item.qty}</span>
                     <span>Rs. {(item.price * item.qty).toLocaleString()}</span>
                   </div>
                 ))}

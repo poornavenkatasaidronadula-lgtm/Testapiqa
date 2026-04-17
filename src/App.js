@@ -29,32 +29,33 @@ function App() {
     if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
   }, []);
 
-  const addToCart = (product, quantity = 1) => {
+  const addToCart = (product, quantity = 1, size = null) => {
     setCartItems(prev => {
-      const existing = prev.find(i => i.id === product.id);
+      const cartItemId = size ? `${product.id}-${size}` : `${product.id}`;
+      const existing = prev.find(i => (i.cartItemId || `${i.id}`) === cartItemId);
       let updated;
       if (existing) {
-        updated = prev.map(i => i.id === product.id ? { ...i, qty: i.qty + quantity } : i);
+        updated = prev.map(i => (i.cartItemId || `${i.id}`) === cartItemId ? { ...i, qty: i.qty + quantity } : i);
       } else {
-        updated = [...prev, { ...product, qty: quantity }];
+        updated = [...prev, { ...product, cartItemId, selectedSize: size, qty: quantity }];
       }
       localStorage.setItem('ae_cart', JSON.stringify(updated));
       return updated;
     });
   };
 
-  const removeFromCart = (id) => {
+  const removeFromCart = (cartItemId) => {
     setCartItems(prev => {
-      const updated = prev.filter(i => i.id !== id);
+      const updated = prev.filter(i => (i.cartItemId || `${i.id}`) !== cartItemId);
       localStorage.setItem('ae_cart', JSON.stringify(updated));
       return updated;
     });
   };
 
-  const updateQty = (id, qty) => {
+  const updateQty = (cartItemId, qty) => {
     if (qty < 1) return;
     setCartItems(prev => {
-      const updated = prev.map(i => i.id === id ? { ...i, qty } : i);
+      const updated = prev.map(i => (i.cartItemId || `${i.id}`) === cartItemId ? { ...i, qty } : i);
       localStorage.setItem('ae_cart', JSON.stringify(updated));
       return updated;
     });

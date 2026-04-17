@@ -49,9 +49,11 @@ export default function ProductDetail() {
   }
 
   const handleAddToCart = () => {
-    addToCart(product, qty);
+    addToCart(product, qty, selectedSize);
     showToast(`${product.name} (x${qty}) added to cart!`);
   };
+
+  const isAddToCartDisabled = product.size && product.size.length > 0 && !selectedSize;
 
   return (
     <>
@@ -182,8 +184,13 @@ export default function ProductDetail() {
 
               {/* Actions */}
               <div className="product-actions">
-                <button className="add-to-cart-btn" onClick={handleAddToCart}>
-                  <FiShoppingCart /> Add to Cart
+                <button 
+                  className="add-to-cart-btn" 
+                  onClick={handleAddToCart}
+                  disabled={isAddToCartDisabled}
+                  style={{ opacity: isAddToCartDisabled ? 0.6 : 1, cursor: isAddToCartDisabled ? 'not-allowed' : 'pointer' }}
+                >
+                  <FiShoppingCart /> {isAddToCartDisabled ? 'Select a Size' : 'Add to Cart'}
                 </button>
                 <button
                   onClick={() => { toggleWishlist(product); showToast(isWishlisted ? 'Removed from wishlist' : 'Added to wishlist!'); }}

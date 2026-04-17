@@ -26,9 +26,15 @@ export default function ProductCard({ product, showToast }) {
       <div className="product-card-image">
         <img src={product.image} alt={product.name} loading="lazy" />
         <div className="product-overlay">
-          <button className="overlay-btn" onClick={handleAddToCart}>
-            <FiShoppingCart /> Add to Cart
-          </button>
+          {product.size && product.size.length > 0 ? (
+            <Link to={`/product/${product.id}`} className="overlay-btn">
+              <FiShoppingCart /> Select Size
+            </Link>
+          ) : (
+            <button className="overlay-btn" onClick={handleAddToCart}>
+              <FiShoppingCart /> Add to Cart
+            </button>
+          )}
           <Link to={`/product/${product.id}`} className="overlay-btn secondary">
             <FiEye /> View Product
           </Link>
