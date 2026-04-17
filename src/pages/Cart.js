@@ -129,8 +129,8 @@ export default function Cart() {
             <h3 style={{ marginBottom: '15px', color: '#000' }}>Checkout Information</h3>
             <p style={{ color: '#555', marginBottom: '24px' }}>Register / Login account to proceed on checkout.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <Link to="/login" className="btn-primary" style={{ padding: '12px', textDecoration: 'none', background: 'var(--primary)', color: '#fff', borderRadius: '4px', fontWeight: 600, textAlign: 'center' }}>Register / Login</Link>
-              <button onClick={() => setShowAuthModal(false)} style={{ padding: '12px', background: 'transparent', color: '#555', border: '1px solid #ccc', borderRadius: '4px', fontWeight: 600, cursor: 'pointer', textAlign: 'center' }}>Cancel</button>
+              <Link to="/login" className="btn-primary" style={{ padding: '12px', textDecoration: 'none', background: 'var(--primary)', color: '#fff', borderRadius: '4px', fontWeight: 600, textAlign: 'center', justifyContent: 'center' }}>Register / Login</Link>
+              <button onClick={() => setShowAuthModal(false)} style={{ padding: '12px', background: 'transparent', color: '#555', border: '1px solid #ccc', borderRadius: '4px', fontWeight: 600, cursor: 'pointer', textAlign: 'center', display: 'block', width: '100%' }}>Cancel</button>
             </div>
           </div>
         </>,
