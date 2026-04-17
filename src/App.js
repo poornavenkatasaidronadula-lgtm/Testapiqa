@@ -61,6 +61,11 @@ function App() {
     });
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+    localStorage.removeItem('ae_cart');
+  };
+
   const toggleWishlist = (product) => {
     setWishlist(prev => {
       const exists = prev.find(i => i.id === product.id);
@@ -82,7 +87,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
-      <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQty, wishlist, toggleWishlist }}>
+      <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQty, clearCart, wishlist, toggleWishlist }}>
         <Router>
           <div className="app-wrapper">
             <Navbar />

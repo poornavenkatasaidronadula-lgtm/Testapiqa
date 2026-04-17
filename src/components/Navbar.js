@@ -57,9 +57,14 @@ export default function Navbar() {
             </li>
             <li>
               {user ? (
-                <button className="nav-link" onClick={logout} style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', padding: '0', fontSize: '1rem', fontWeight: 600 }}>
-                  <FiUser /> Logout
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--primary)', fontWeight: '600' }}>
+                    <FiUser /> Hi, {user.firstName || user.name}
+                  </span>
+                  <button className="nav-link" onClick={logout} style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', padding: '0', fontSize: '1rem', fontWeight: 600 }}>
+                    Logout
+                  </button>
+                </div>
               ) : (
                 <Link to="/login" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                   <FiUser /> Signup / Login
@@ -115,9 +120,14 @@ export default function Navbar() {
               <FiUser /> Signup / Login
             </Link>
           ) : (
-            <button className="nav-link" onClick={() => { logout(); setMobileOpen(false); }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 20px', width: '100%', textAlign: 'left', fontSize: '1rem', fontWeight: '600' }}>
-              <FiUser /> Logout
-            </button>
+            <>
+              <div className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', fontWeight: '600' }}>
+                <FiUser /> Hi, {user.firstName || user.name}
+              </div>
+              <button className="nav-link" onClick={() => { logout(); setMobileOpen(false); }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 20px', width: '100%', textAlign: 'left', fontSize: '1rem', fontWeight: '600' }}>
+                Logout
+              </button>
+            </>
           )}
         </div>
       </div>

@@ -5,7 +5,7 @@ import { CartContext, AuthContext } from '../App';
 import { FiTrash2, FiShoppingBag, FiArrowLeft } from 'react-icons/fi';
 
 export default function Cart() {
-  const { cartItems, removeFromCart, updateQty } = useContext(CartContext);
+  const { cartItems, removeFromCart, updateQty, clearCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   const [showAuthModal, setShowAuthModal] = React.useState(false);
 
@@ -109,7 +109,10 @@ export default function Cart() {
                 </div>
                 <button className="checkout-btn" onClick={() => {
                   if (!user) setShowAuthModal(true);
-                  else alert('Order placed successfully! (Checkout flow placeholder)');
+                  else {
+                    alert('Order placed successfully! (Checkout flow placeholder)');
+                    clearCart();
+                  }
                 }}>
                   🛍️ Proceed to Checkout
                 </button>
