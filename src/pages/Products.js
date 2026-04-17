@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { products, brands } from '../data/products';
+import { products } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import { FiSearch } from 'react-icons/fi';
 
@@ -21,7 +21,6 @@ export default function Products() {
   const { category } = useParams();
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(category ? category.charAt(0).toUpperCase() + category.slice(1) : 'All');
-  const [selectedBrand, setSelectedBrand] = useState('');
   const [sortBy, setSortBy] = useState('default');
   const [openGroups, setOpenGroups] = useState({ Women: true, Men: true, Kids: true });
   const [toasts, setToasts] = useState([]);
@@ -46,11 +45,6 @@ export default function Products() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleBrandSelect = (brand) => {
-    setSelectedBrand(brand);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   let filtered = products;
   if (search) {
     filtered = filtered.filter(p =>
@@ -63,9 +57,6 @@ export default function Products() {
       p.category.toLowerCase() === selectedCategory.toLowerCase() ||
       p.subcategory.toLowerCase() === selectedCategory.toLowerCase()
     );
-  }
-  if (selectedBrand) {
-    filtered = filtered.filter(p => p.brand === selectedBrand);
   }
   if (sortBy === 'price-asc') filtered = [...filtered].sort((a, b) => a.price - b.price);
   if (sortBy === 'price-desc') filtered = [...filtered].sort((a, b) => b.price - a.price);
@@ -151,53 +142,6 @@ export default function Products() {
               </div>
             </div>
 
-            {/* Brands */}
-            <div className="sidebar-card">
-              <div className="sidebar-card-header">
-                🏷️ Brands
-              </div>
-              <div className="sidebar-card-body">
-                <div
-                  className={`sidebar-category-item ${selectedBrand === '' ? 'active' : ''}`}
-                  onClick={() => handleBrandSelect('')}
-                >
-                  All Brands
-                  <span className="count">
-                    {(() => {
-                      let temp = products;
-                      if (selectedCategory && selectedCategory !== 'All') {
-                        temp = temp.filter(p => p.category.toLowerCase() === selectedCategory.toLowerCase() || p.subcategory.toLowerCase() === selectedCategory.toLowerCase());
-                      }
-                      return temp.length;
-                    })()}
-                  </span>
-                </div>
-                {brands.map(brand => {
-                  let contextProducts = products;
-                  if (selectedCategory && selectedCategory !== 'All') {
-                    contextProducts = contextProducts.filter(p => 
-                      p.category.toLowerCase() === selectedCategory.toLowerCase() || 
-                      p.subcategory.toLowerCase() === selectedCategory.toLowerCase()
-                    );
-                  }
-                  const actualCount = contextProducts.filter(p => p.brand === brand.name).length;
-                  
-                  if (actualCount === 0 && selectedBrand !== brand.name) return null;
-                  
-                  return (
-                    <div
-                      key={brand.name}
-                      className={`sidebar-brand-item ${selectedBrand === brand.name ? 'active' : ''}`}
-                      onClick={() => handleBrandSelect(brand.name === selectedBrand ? '' : brand.name)}
-                      style={selectedBrand === brand.name ? { color: 'var(--primary)', background: 'var(--orange-light)' } : { opacity: actualCount === 0 ? 0.5 : 1 }}
-                    >
-                      {brand.name}
-                      <span>({actualCount})</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
           </aside>
 
           {/* Main */}
@@ -229,7 +173,6 @@ export default function Products() {
                   onClick={() => { 
                     setSearch(''); 
                     setSelectedCategory('All'); 
-                    setSelectedBrand(''); 
                     window.scrollTo({ top: 0, behavior: 'smooth' }); 
                   }}
                 >

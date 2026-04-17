@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../App';
 import { FiMail, FiUser } from 'react-icons/fi';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 export default function Signup() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -43,23 +45,32 @@ export default function Signup() {
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      const users = JSON.parse(localStorage.getItem('ae_users') || '[]');
-      if (users.find(u => u.email === form.email)) {
-        setError('Email already registered. Please login.');
+    setTimeout(async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/signup`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: form.name, email: form.email, password: form.password,
+            firstName: form.firstName, lastName: form.lastName, company: form.company,
+            address: form.address, address2: form.address2, country: form.country,
+            state: form.state, city: form.city, zipcode: form.zipcode, mobile: form.mobile
+          })
+        });
+        const data = await response.json();
+        
+        if (!response.ok) {
+           setError(data.error || 'Signup failed');
+           setLoading(false);
+           return;
+        }
+
+        login(data);
+        navigate('/');
+      } catch (err) {
+        setError('Server error connecting to database');
         setLoading(false);
-        return;
       }
-      const newUser = { 
-        name: form.name, email: form.email, password: form.password,
-        firstName: form.firstName, lastName: form.lastName, company: form.company,
-        address: form.address, address2: form.address2, country: form.country,
-        state: form.state, city: form.city, zipcode: form.zipcode, mobile: form.mobile
-      };
-      users.push(newUser);
-      localStorage.setItem('ae_users', JSON.stringify(users));
-      login(newUser);
-      navigate('/');
     }, 800);
   };
 

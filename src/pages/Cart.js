@@ -1,14 +1,29 @@
 import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CartContext, AuthContext } from '../App';
-import { FiTrash2, FiShoppingBag, FiArrowLeft } from 'react-icons/fi';
+import { FiTrash2, FiShoppingBag, FiArrowLeft, FiPackage } from 'react-icons/fi';
+
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 export default function Cart() {
   const { cartItems, removeFromCart, updateQty, clearCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = React.useState(false);
   const [showAddressForm, setShowAddressForm] = React.useState(false);
+  const [formData, setFormData] = React.useState({
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    company: user?.company || '',
+    address: user?.address || '',
+    address2: user?.address2 || '',
+    country: user?.country || 'India',
+    state: user?.state || '',
+    city: user?.city || '',
+    zipcode: user?.zipcode || '',
+    mobile: user?.mobile || '',
+  });
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
   const shipping = subtotal > 500 ? 0 : 50;
@@ -148,41 +163,60 @@ export default function Cart() {
             
             <form onSubmit={(e) => {
               e.preventDefault();
-              alert('Order placed successfully to your address!');
-              clearCart();
-              setShowAddressForm(false);
+              const newOrder = {
+                user_email: user.email,
+                items: cartItems,
+                subtotal,
+                shipping,
+                total,
+                address: formData,
+                status: 'Processing'
+              };
+              
+              fetch(`${API_URL}/api/orders`, {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify(newOrder)
+              }).then(res => res.json()).then(() => {
+                  clearCart();
+                  setShowAddressForm(false);
+                  navigate('/orders');
+              }).catch(err => {
+                  alert("Failed to create order. Please try again.");
+                  console.error(err);
+              });
             }} style={{ textAlign: 'left' }}>
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div className="form-group">
                   <label className="form-label">First name *</label>
-                  <input type="text" className="form-input" required defaultValue={user.firstName || ''} />
+                  <input type="text" className="form-input" required value={formData.firstName} onChange={e => setFormData(p => ({...p, firstName: e.target.value}))} />
                 </div>
                 <div className="form-group">
                   <label className="form-label">Last name *</label>
-                  <input type="text" className="form-input" required defaultValue={user.lastName || ''} />
+                  <input type="text" className="form-input" required value={formData.lastName} onChange={e => setFormData(p => ({...p, lastName: e.target.value}))} />
                 </div>
               </div>
               
               <div className="form-group">
                 <label className="form-label">Company</label>
-                <input type="text" className="form-input" defaultValue={user.company || ''} />
+                <input type="text" className="form-input" value={formData.company} onChange={e => setFormData(p => ({...p, company: e.target.value}))} />
               </div>
               
               <div className="form-group">
                 <label className="form-label">Address * (Street address, P.O. Box, Company name, etc.)</label>
-                <input type="text" className="form-input" required defaultValue={user.address || ''} />
+                <input type="text" className="form-input" required value={formData.address} onChange={e => setFormData(p => ({...p, address: e.target.value}))} />
               </div>
               
               <div className="form-group">
                 <label className="form-label">Address 2</label>
-                <input type="text" className="form-input" defaultValue={user.address2 || ''} />
+                <input type="text" className="form-input" value={formData.address2} onChange={e => setFormData(p => ({...p, address2: e.target.value}))} />
               </div>
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div className="form-group">
                   <label className="form-label">Country *</label>
-                  <select className="form-input" required defaultValue={user.country || 'India'}>
+                  <select className="form-input" required value={formData.country} onChange={e => setFormData(p => ({...p, country: e.target.value}))}>
                     <option value="India">India</option>
                     <option value="United States">United States</option>
                     <option value="Canada">Canada</option>
@@ -191,32 +225,32 @@ export default function Cart() {
                 </div>
                 <div className="form-group">
                   <label className="form-label">State *</label>
-                  <input type="text" className="form-input" required defaultValue={user.state || ''} />
+                  <input type="text" className="form-input" required value={formData.state} onChange={e => setFormData(p => ({...p, state: e.target.value}))} />
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div className="form-group">
                   <label className="form-label">City *</label>
-                  <input type="text" className="form-input" required defaultValue={user.city || ''} />
+                  <input type="text" className="form-input" required value={formData.city} onChange={e => setFormData(p => ({...p, city: e.target.value}))} />
                 </div>
                 <div className="form-group">
                   <label className="form-label">Zipcode *</label>
-                  <input type="text" className="form-input" required defaultValue={user.zipcode || ''} />
+                  <input type="text" className="form-input" required value={formData.zipcode} onChange={e => setFormData(p => ({...p, zipcode: e.target.value}))} />
                 </div>
               </div>
 
               <div className="form-group">
                 <label className="form-label">Mobile Number *</label>
-                <input type="tel" className="form-input" required defaultValue={user.mobile || ''} />
+                <input type="tel" className="form-input" required value={formData.mobile} onChange={e => setFormData(p => ({...p, mobile: e.target.value}))} />
               </div>
               
               <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
                 <button type="button" style={{ flex: 1, padding: '12px', background: '#ccc', border: 'none', color: '#333', borderRadius: '4px', cursor: 'pointer', fontWeight: 600, fontSize: '1rem' }} onClick={() => setShowAddressForm(false)}>
                   Cancel
                 </button>
-                <button type="submit" style={{ flex: 1, padding: '12px', background: 'var(--primary)', border: 'none', color: '#fff', borderRadius: '4px', cursor: 'pointer', fontWeight: 600, fontSize: '1rem' }}>
-                  Save Address
+                <button type="submit" style={{ flex: 1, padding: '12px', background: 'var(--primary)', border: 'none', color: '#fff', borderRadius: '4px', cursor: 'pointer', fontWeight: 600, fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                  <FiPackage /> Place Order
                 </button>
               </div>
             </form>

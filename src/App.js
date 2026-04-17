@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Contact from './pages/Contact';
 import TestCases from './pages/TestCases';
+import Orders from './pages/Orders';
 
 export const CartContext = createContext();
 export const AuthContext = createContext();
@@ -102,6 +103,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/test-cases" element={<TestCases />} />
+                <Route path="/orders" element={<Orders />} />
               </Routes>
             </main>
             <Footer />

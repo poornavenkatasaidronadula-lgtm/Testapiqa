@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CartContext, AuthContext } from '../App';
-import { FiShoppingCart, FiUser, FiHome, FiGrid, FiClipboard, FiMail, FiYoutube } from 'react-icons/fi';
+import { FiShoppingCart, FiUser, FiHome, FiGrid, FiClipboard, FiMail, FiYoutube, FiPackage } from 'react-icons/fi';
 import { MdOutlineStorefront } from 'react-icons/md';
 
 export default function Navbar() {
@@ -57,13 +57,18 @@ export default function Navbar() {
             </li>
             <li>
               {user ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--primary)', fontWeight: '600' }}>
+                <div className="user-menu-container">
+                  <span className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--primary)', fontWeight: '600', cursor: 'pointer' }}>
                     <FiUser /> Hi, {user.firstName || user.name}
                   </span>
-                  <button className="nav-link" onClick={logout} style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', padding: '0', fontSize: '1rem', fontWeight: 600 }}>
-                    Logout
-                  </button>
+                  <div className="user-dropdown">
+                    <Link to="/orders" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <FiPackage /> Orders
+                    </Link>
+                    <button className="nav-link" onClick={logout} style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 14px', fontSize: '1rem', fontWeight: 600, width: '100%', textAlign: 'left' }}>
+                      Logout
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <Link to="/login" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -124,7 +129,10 @@ export default function Navbar() {
               <div className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', fontWeight: '600' }}>
                 <FiUser /> Hi, {user.firstName || user.name}
               </div>
-              <button className="nav-link" onClick={() => { logout(); setMobileOpen(false); }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 20px', width: '100%', textAlign: 'left', fontSize: '1rem', fontWeight: '600' }}>
+              <Link to="/orders" className={`nav-link ${isActive('/orders') ? 'active' : ''}`} onClick={() => setMobileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingLeft: '28px' }}>
+                <FiPackage /> Orders
+              </Link>
+              <button className="nav-link" onClick={() => { logout(); setMobileOpen(false); }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 28px', width: '100%', textAlign: 'left', fontSize: '1rem', fontWeight: '600' }}>
                 Logout
               </button>
             </>

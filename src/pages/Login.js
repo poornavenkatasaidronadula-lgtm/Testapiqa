@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../App';
 import { FiMail, FiLock } from 'react-icons/fi';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 export default function Login() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -16,14 +18,23 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setTimeout(() => {
-      const users = JSON.parse(localStorage.getItem('ae_users') || '[]');
-      const user = users.find(u => u.email === form.email && u.password === form.password);
-      if (user) {
-        login(user);
-        navigate('/');
-      } else {
-        setError('Invalid email or password. Please try again.');
+    setTimeout(async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: form.email, password: form.password })
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+          login(data);
+          navigate('/');
+        } else {
+          setError(data.error || 'Invalid email or password. Please try again.');
+        }
+      } catch (err) {
+        setError('Server error connecting to database');
       }
       setLoading(false);
     }, 800);
