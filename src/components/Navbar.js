@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CartContext, AuthContext } from '../App';
-import { FiShoppingCart, FiUser } from 'react-icons/fi';
+import { FiShoppingCart, FiUser, FiHome, FiGrid, FiClipboard, FiMail, FiYoutube } from 'react-icons/fi';
 import { MdOutlineStorefront } from 'react-icons/md';
 
 export default function Navbar() {
@@ -11,10 +11,10 @@ export default function Navbar() {
   const location = useLocation();
 
   const navLinks = [
-    { to: '/', label: 'Home', icon: '🏠' },
-    { to: '/products', label: 'Products', icon: '🛍️' },
-    { to: '/test-cases', label: 'Test Cases', icon: '📋' },
-    { to: '/contact', label: 'Contact us', icon: '📧' },
+    { to: '/', label: 'Home', icon: <FiHome /> },
+    { to: '/products', label: 'Products', icon: <FiGrid /> },
+    { to: '/test-cases', label: 'Test Cases', icon: <FiClipboard /> },
+    { to: '/contact', label: 'Contact us', icon: <FiMail /> },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -36,39 +36,40 @@ export default function Navbar() {
                 <Link
                   to={link.to}
                   className={`nav-link ${isActive(link.to) ? 'active' : ''}`}
+                  style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
                 >
-                  {link.label}
+                  {link.icon} {link.label}
                 </Link>
               </li>
             ))}
             <li>
-              <a href="https://youtube.com/@qaframeworkfactory?si=KK5aYvaQXEGWCCxd" target="_blank" rel="noreferrer" className="nav-link">
-                Video Tutorials
+              <a href="https://youtube.com/@qaframeworkfactory?si=KK5aYvaQXEGWCCxd" target="_blank" rel="noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <FiYoutube /> Video Tutorials
               </a>
+            </li>
+            <li>
+              <Link to="/cart" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <FiShoppingCart /> Cart
+                {cartItems.length > 0 && (
+                  <span className="cart-count" style={{ marginLeft: '4px', position: 'static' }}>{cartItems.reduce((a, b) => a + b.qty, 0)}</span>
+                )}
+              </Link>
+            </li>
+            <li>
+              {user ? (
+                <button className="nav-link" onClick={logout} style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', padding: '0', fontSize: '1rem', fontWeight: 600 }}>
+                  <FiUser /> Logout
+                </button>
+              ) : (
+                <Link to="/login" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <FiUser /> Signup / Login
+                </Link>
+              )}
             </li>
           </ul>
 
           {/* Actions */}
           <div className="navbar-actions">
-            <Link to="/cart" className="nav-icon-btn" title="Cart">
-              <FiShoppingCart />
-              {cartItems.length > 0 && (
-                <span className="cart-count">{cartItems.reduce((a, b) => a + b.qty, 0)}</span>
-              )}
-            </Link>
-            {user ? (
-              <button
-                className="btn-primary"
-                style={{ padding: '8px 16px', fontSize: '0.82rem' }}
-                onClick={logout}
-              >
-                <FiUser /> Logout
-              </button>
-            ) : (
-              <Link to="/login" className="btn-primary" style={{ padding: '8px 16px', fontSize: '0.82rem' }}>
-                <FiUser /> Signup / Login
-              </Link>
-            )}
             <button
               className="hamburger"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -91,6 +92,7 @@ export default function Navbar() {
               to={link.to}
               className={`nav-link ${isActive(link.to) ? 'active' : ''}`}
               onClick={() => setMobileOpen(false)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
             >
               {link.icon} {link.label}
             </Link>
@@ -101,13 +103,21 @@ export default function Navbar() {
             rel="noreferrer"
             className="nav-link"
             onClick={() => setMobileOpen(false)}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
           >
-            ▶️ Video Tutorials
+            <FiYoutube /> Video Tutorials
           </a>
-          {!user && (
-            <Link to="/login" className="nav-link" onClick={() => setMobileOpen(false)}>
-              👤 Signup / Login
+          <Link to="/cart" className="nav-link" onClick={() => setMobileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <FiShoppingCart /> Cart ({cartItems.reduce((a, b) => a + b.qty, 0)})
+          </Link>
+          {!user ? (
+            <Link to="/login" className="nav-link" onClick={() => setMobileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <FiUser /> Signup / Login
             </Link>
+          ) : (
+            <button className="nav-link" onClick={() => { logout(); setMobileOpen(false); }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 20px', width: '100%', textAlign: 'left', fontSize: '1rem', fontWeight: '600' }}>
+              <FiUser /> Logout
+            </button>
           )}
         </div>
       </div>
