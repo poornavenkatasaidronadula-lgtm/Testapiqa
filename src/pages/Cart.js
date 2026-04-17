@@ -8,6 +8,7 @@ export default function Cart() {
   const { cartItems, removeFromCart, updateQty, clearCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   const [showAuthModal, setShowAuthModal] = React.useState(false);
+  const [showAddressForm, setShowAddressForm] = React.useState(false);
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
   const shipping = subtotal > 500 ? 0 : 50;
@@ -110,8 +111,7 @@ export default function Cart() {
                 <button className="checkout-btn" onClick={() => {
                   if (!user) setShowAuthModal(true);
                   else {
-                    alert('Order placed successfully! (Checkout flow placeholder)');
-                    clearCart();
+                    setShowAddressForm(true);
                   }
                 }}>
                   🛍️ Proceed to Checkout
@@ -135,6 +135,91 @@ export default function Cart() {
               <Link to="/login" className="btn-primary" style={{ padding: '12px', textDecoration: 'none', background: 'var(--primary)', color: '#fff', borderRadius: '4px', fontWeight: 600, textAlign: 'center', justifyContent: 'center' }}>Register / Login</Link>
               <button onClick={() => setShowAuthModal(false)} style={{ padding: '12px', background: 'transparent', color: '#555', border: '1px solid #ccc', borderRadius: '4px', fontWeight: 600, cursor: 'pointer', textAlign: 'center', display: 'block', width: '100%' }}>Cancel</button>
             </div>
+          </div>
+        </>,
+        document.body
+      )}
+
+      {showAddressForm && ReactDOM.createPortal(
+        <>
+          <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.5)', zIndex: 9998 }} onClick={() => setShowAddressForm(false)} />
+          <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '30px', borderRadius: '8px', zIndex: 9999, width: '90%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
+            <h3 style={{ marginBottom: '16px', color: 'var(--primary)', textAlign: 'center', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>ADDRESS INFORMATION</h3>
+            
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              alert('Order placed successfully to your address!');
+              clearCart();
+              setShowAddressForm(false);
+            }} style={{ textAlign: 'left' }}>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="form-group">
+                  <label className="form-label">First name *</label>
+                  <input type="text" className="form-input" required defaultValue={user.firstName || user.name || ''} />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Last name *</label>
+                  <input type="text" className="form-input" required defaultValue={user.lastName || ''} />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Company</label>
+                <input type="text" className="form-input" defaultValue={user.company || ''} />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Address * (Street address, P.O. Box, Company name, etc.)</label>
+                <input type="text" className="form-input" required defaultValue={user.address || ''} />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Address 2</label>
+                <input type="text" className="form-input" defaultValue={user.address2 || ''} />
+              </div>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="form-group">
+                  <label className="form-label">Country *</label>
+                  <select className="form-input" required defaultValue={user.country || 'India'}>
+                    <option value="India">India</option>
+                    <option value="United States">United States</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Australia">Australia</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">State *</label>
+                  <input type="text" className="form-input" required defaultValue={user.state || ''} />
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="form-group">
+                  <label className="form-label">City *</label>
+                  <input type="text" className="form-input" required defaultValue={user.city || ''} />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Zipcode *</label>
+                  <input type="text" className="form-input" required defaultValue={user.zipcode || ''} />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Mobile Number *</label>
+                <input type="tel" className="form-input" required defaultValue={user.mobile || ''} />
+              </div>
+              
+              <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
+                <button type="button" style={{ flex: 1, padding: '12px', background: '#ccc', border: 'none', color: '#333', borderRadius: '4px', cursor: 'pointer', fontWeight: 600, fontSize: '1rem' }} onClick={() => setShowAddressForm(false)}>
+                  Cancel
+                </button>
+                <button type="submit" style={{ flex: 1, padding: '12px', background: 'var(--primary)', border: 'none', color: '#fff', borderRadius: '4px', cursor: 'pointer', fontWeight: 600, fontSize: '1rem' }}>
+                  Save Address
+                </button>
+              </div>
+            </form>
           </div>
         </>,
         document.body
