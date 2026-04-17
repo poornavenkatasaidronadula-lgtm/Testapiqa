@@ -48,8 +48,25 @@ export default function ProductCard({ product, showToast }) {
         </button>
       </div>
       <div className="product-card-body">
-        <div className="product-category-tag">{product.category} — {product.subcategory}</div>
-        <h3 className="product-name">{product.name}</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <div className="product-category-tag" style={{ margin: 0 }}>{product.category} — {product.subcategory}</div>
+          <div style={{
+            fontSize: '0.75rem',
+            fontWeight: 700,
+            background: '#f8fafc',
+            padding: '4px 8px',
+            borderRadius: '4px',
+            border: '1px solid #e2e8f0',
+            color: '#334155',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+          }}>
+            🏢 {product.brand}
+          </div>
+        </div>
+        <h3 className="product-name" style={{ marginTop: '4px' }}>{product.name}</h3>
         <div className="product-price-row">
           <span className="product-price">Rs. {product.price.toLocaleString()}</span>
           <div className="product-rating">
@@ -66,8 +83,8 @@ export default function ProductCard({ product, showToast }) {
             <h3 style={{ marginBottom: '10px', color: '#000' }}>Added!</h3>
             <p style={{ color: '#555', marginBottom: '24px' }}>Your product has been added to cart.</p>
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
-               <Link to="/cart" className="btn-primary" style={{ padding: '10px 20px', textDecoration: 'none', background: 'var(--primary)', color: '#fff', borderRadius: '4px', border: 'none', fontWeight: 600 }}>View Cart</Link>
-               <button onClick={() => setShowModal(false)} style={{ padding: '10px 20px', background: '#e0e0e0', color: '#333', borderRadius: '4px', border: 'none', fontWeight: 600, cursor: 'pointer' }}>Continue</button>
+              <Link to="/cart" className="btn-primary" style={{ padding: '10px 20px', textDecoration: 'none', background: 'var(--primary)', color: '#fff', borderRadius: '4px', border: 'none', fontWeight: 600 }}>View Cart</Link>
+              <button onClick={() => setShowModal(false)} style={{ padding: '10px 20px', background: '#e0e0e0', color: '#333', borderRadius: '4px', border: 'none', fontWeight: 600, cursor: 'pointer' }}>Continue</button>
             </div>
           </div>
         </>,

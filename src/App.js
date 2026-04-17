@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -15,6 +15,14 @@ import Orders from './pages/Orders';
 
 export const CartContext = createContext();
 export const AuthContext = createContext();
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -90,6 +98,7 @@ function App() {
     <AuthContext.Provider value={{ user, login, logout }}>
       <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQty, clearCart, wishlist, toggleWishlist }}>
         <Router>
+          <ScrollToTop />
           <div className="app-wrapper">
             <Navbar />
             <main className="main-content">
