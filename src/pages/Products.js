@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { products } from '../data/products';
+import { products, brands } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import { FiSearch } from 'react-icons/fi';
 
@@ -21,6 +21,8 @@ export default function Products() {
   const { category } = useParams();
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(category ? category.charAt(0).toUpperCase() + category.slice(1) : 'All');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState('All');
   const [sortBy, setSortBy] = useState('default');
   const [openGroups, setOpenGroups] = useState({ Women: true, Men: true, Kids: true });
   const [toasts, setToasts] = useState([]);
@@ -40,8 +42,14 @@ export default function Products() {
 
   const toggleGroup = (g) => setOpenGroups(prev => ({ ...prev, [g]: !prev[g] }));
 
-  const handleCategorySelect = (cat) => {
+  const handleCategorySelect = (cat, subcat = '') => {
     setSelectedCategory(cat);
+    setSelectedSubcategory(subcat);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBrandSelect = (brandName) => {
+    setSelectedBrand(brandName);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -53,10 +61,20 @@ export default function Products() {
     );
   }
   if (selectedCategory && selectedCategory !== 'All') {
-    filtered = filtered.filter(p =>
-      p.category.toLowerCase() === selectedCategory.toLowerCase() ||
-      p.subcategory.toLowerCase() === selectedCategory.toLowerCase()
-    );
+    if (selectedSubcategory) {
+      filtered = filtered.filter(p =>
+        p.category.toLowerCase() === selectedCategory.toLowerCase() &&
+        p.subcategory.toLowerCase() === selectedSubcategory.toLowerCase()
+      );
+    } else {
+      filtered = filtered.filter(p =>
+        p.category.toLowerCase() === selectedCategory.toLowerCase()
+      );
+    }
+  }
+  
+  if (selectedBrand && selectedBrand !== 'All') {
+    filtered = filtered.filter(p => p.brand === selectedBrand);
   }
   if (sortBy === 'price-asc') filtered = [...filtered].sort((a, b) => a.price - b.price);
   if (sortBy === 'price-desc') filtered = [...filtered].sort((a, b) => b.price - a.price);
@@ -81,7 +99,13 @@ export default function Products() {
             {selectedCategory !== 'All' && (
               <>
                 <span>›</span>
-                <span style={{ color: 'var(--primary)', fontWeight: 600 }}>{selectedCategory}</span>
+                <span style={{ color: selectedSubcategory ? 'var(--text-gray)' : 'var(--primary)', fontWeight: selectedSubcategory ? 400 : 600 }}>{selectedCategory}</span>
+              </>
+            )}
+            {selectedSubcategory && (
+              <>
+                <span>›</span>
+                <span style={{ color: 'var(--primary)', fontWeight: 600 }}>{selectedSubcategory}</span>
               </>
             )}
           </div>
@@ -129,14 +153,41 @@ export default function Products() {
                     {openGroups[group.label] && group.subs.map(sub => (
                       <div
                         key={sub}
-                        className={`sidebar-brand-item ${selectedCategory === sub ? 'active' : ''}`}
-                        onClick={() => handleCategorySelect(sub)}
-                        style={selectedCategory === sub ? { color: 'var(--primary)', background: 'var(--orange-light)' } : {}}
+                        className={`sidebar-brand-item ${selectedSubcategory === sub && selectedCategory === group.label ? 'active' : ''}`}
+                        onClick={() => handleCategorySelect(group.label, sub)}
+                        style={selectedSubcategory === sub && selectedCategory === group.label ? { color: 'var(--primary)', background: 'var(--orange-light)' } : {}}
                       >
                         {sub}
-                        <span>{products.filter(p => p.subcategory === sub).length}</span>
+                        <span>{products.filter(p => p.category === group.label && p.subcategory === sub).length}</span>
                       </div>
                     ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Brands */}
+            <div className="sidebar-card">
+              <div className="sidebar-card-header">
+                🏢 Brands
+              </div>
+              <div className="sidebar-card-body">
+                <div
+                  className={`sidebar-brand-item ${selectedBrand === 'All' ? 'active' : ''}`}
+                  onClick={() => handleBrandSelect('All')}
+                  style={selectedBrand === 'All' ? { color: 'var(--primary)', background: 'var(--orange-light)' } : {}}
+                >
+                  All Brands
+                </div>
+                {brands.map(brand => (
+                  <div
+                    key={brand.name}
+                    className={`sidebar-brand-item ${selectedBrand === brand.name ? 'active' : ''}`}
+                    onClick={() => handleBrandSelect(brand.name)}
+                    style={selectedBrand === brand.name ? { color: 'var(--primary)', background: 'var(--orange-light)' } : {}}
+                  >
+                    {brand.name}
+                    <span>{products.filter(p => p.brand === brand.name).length}</span>
                   </div>
                 ))}
               </div>
@@ -173,6 +224,8 @@ export default function Products() {
                   onClick={() => { 
                     setSearch(''); 
                     setSelectedCategory('All'); 
+                    setSelectedSubcategory('');
+                    setSelectedBrand('All');
                     window.scrollTo({ top: 0, behavior: 'smooth' }); 
                   }}
                 >

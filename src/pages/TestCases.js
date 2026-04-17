@@ -115,18 +115,6 @@ export default function TestCases() {
               )}
             </div>
           ))}
-
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <a
-              href="/test-cases"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-primary"
-              style={{ fontSize: '1rem', padding: '14px 36px' }}
-            >
-              🔌 Also Check: API Testing List
-            </a>
-          </div>
         </div>
       </div>
     </>

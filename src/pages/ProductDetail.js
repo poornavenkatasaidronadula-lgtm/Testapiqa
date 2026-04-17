@@ -29,6 +29,10 @@ export default function ProductDetail() {
   const related = products.filter(p => p.category === product?.category && p.id !== product?.id).slice(0, 4);
   const isWishlisted = wishlist.find(p => p.id === product?.id);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
   const showToast = (msg) => {
     const id = Date.now();
     setToasts(prev => [...prev, { id, msg }]);
