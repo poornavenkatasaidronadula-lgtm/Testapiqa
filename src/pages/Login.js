@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../App';
 import { FiMail, FiLock } from 'react-icons/fi';
 
-const API_URL = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : '';
 
 export default function Login() {
   const { login } = useContext(AuthContext);
