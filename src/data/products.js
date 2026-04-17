@@ -22,7 +22,6 @@ export const products = [
   // Women - Saree
   { id: 17, name: 'Cotton Silk Hand Block Print Saree', price: 3000, category: 'Women', subcategory: 'Saree', brand: 'Biba', image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80', rating: 4.8, reviews: 27, inStock: true, description: 'Handcrafted block print saree in premium cotton silk.', color: 'Red', size: ['Free Size'] },
   { id: 18, name: 'Rust Red Linen Saree', price: 3500, category: 'Women', subcategory: 'Saree', brand: 'Madame', image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80', rating: 4.6, reviews: 18, inStock: true, description: 'Elegant rust red linen saree for festive occasions.', color: 'Rust Red', size: ['Free Size'] },
-,
   { id: 20, name: 'Men Casual Wear V1', price: 800, category: 'Men', subcategory: 'Tshirts', brand: 'H&M', image: '/images/grey_tshirt.png', rating: 4.5, reviews: 10, inStock: true, description: 'Comfortable men casual wear.', color: 'Grey', size: ['S', 'M', 'L', 'XL'] },
   { id: 21, name: 'Men Casual Wear V2', price: 900, category: 'Men', subcategory: 'Tshirts', brand: 'H&M', image: '/images/grey_tshirt.png', rating: 4.5, reviews: 11, inStock: true, description: 'Comfortable men casual wear.', color: 'Grey', size: ['S', 'M', 'L', 'XL'] },
   { id: 22, name: 'Men Casual Wear V3', price: 1000, category: 'Men', subcategory: 'Tshirts', brand: 'H&M', image: '/images/grey_tshirt.png', rating: 4.5, reviews: 12, inStock: true, description: 'Comfortable men casual wear.', color: 'Grey', size: ['S', 'M', 'L', 'XL'] },
