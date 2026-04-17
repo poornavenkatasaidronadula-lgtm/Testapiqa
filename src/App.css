@@ -636,7 +636,27 @@
   gap: 8px;
 }
 
-.sidebar-card-body { padding: 10px 0; }
+.sidebar-card-body {
+  padding: 10px 0;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+/* Custom Scrollbar for Sidebar Cards */
+.sidebar-card-body::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-card-body::-webkit-scrollbar-track {
+  background: #f9f9f9; 
+  border-radius: 4px;
+}
+.sidebar-card-body::-webkit-scrollbar-thumb {
+  background: #ddd; 
+  border-radius: 4px;
+}
+.sidebar-card-body::-webkit-scrollbar-thumb:hover {
+  background: var(--primary); 
+}
 
 .sidebar-category-item {
   padding: 10px 18px;
