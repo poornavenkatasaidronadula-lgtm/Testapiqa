@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CartContext, AuthContext } from '../App';
-import { FiShoppingCart, FiUser, FiHome, FiGrid, FiClipboard, FiYoutube, FiPackage } from 'react-icons/fi';
+import { FiShoppingCart, FiUser, FiHome, FiGrid, FiClipboard, FiYoutube, FiPackage, FiZap } from 'react-icons/fi';
 import { MdOutlineStorefront } from 'react-icons/md';
 
 export default function Navbar() {
@@ -83,7 +83,7 @@ export default function Navbar() {
             </li>
             <li>
               <a href="https://topmate.io/qaframeworkfactory/2052890" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '5px', background: 'var(--primary)', color: '#fff', padding: '8px 16px', borderRadius: '6px', fontWeight: 600, textDecoration: 'none', marginLeft: '6px', transition: '0.2s', boxShadow: '0 4px 6px rgba(249, 115, 22, 0.2)' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}>
-                <FiUser /> Enroll Now
+                <FiZap /> Enroll Now
               </a>
             </li>
           </ul>
@@ -168,7 +168,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', background: 'var(--primary)', color: '#fff', padding: '12px', borderRadius: '6px', fontWeight: 600, textDecoration: 'none', marginTop: '12px', boxShadow: '0 4px 6px rgba(249, 115, 22, 0.2)' }}
           >
-            <FiUser /> Enroll Now
+            <FiZap /> Enroll Now
           </a>
         </div>
       </div>
