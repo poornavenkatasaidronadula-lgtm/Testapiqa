@@ -96,9 +96,9 @@ export default function Navbar() {
               aria-label="Menu"
             >
               {mobileOpen ? (
-                <><span/><span/><span/></>
+                <><span /><span /><span /></>
               ) : (
-                <><span/><span/><span/></>
+                <><span /><span /><span /></>
               )}
             </button>
           </div>
