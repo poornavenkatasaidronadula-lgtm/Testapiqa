@@ -145,9 +145,9 @@ export default function Home() {
           </div>
           <div className="testimonials-grid">
             {[
-              { name: 'Priya Sharma', role: 'QA Engineer at TCS', text: 'Testapiqa is the best practice platform I have used. The test cases are comprehensive and well documented.', stars: 5, initial: 'P' },
-              { name: 'Rahul Verma', role: 'SDET at Infosys', text: 'The API endpoints here are perfect for API automation testing. I recommend this to all my junior colleagues.', stars: 5, initial: 'R' },
-              { name: 'Anita Patel', role: 'Test Lead at Wipro', text: 'Great website for selenium practice. The UI interactions are similar to real-world e-commerce applications.', stars: 4, initial: 'A' },
+              { name: 'Priya Sharma', role: 'QA Engineer', text: 'Testapiqa is the best practice platform I have used. The test cases are comprehensive and well documented.', stars: 5, initial: 'P' },
+              { name: 'Rahul Verma', role: 'SDET', text: 'The API endpoints here are perfect for API automation testing. I recommend this to all my junior colleagues.', stars: 5, initial: 'R' },
+              { name: 'Anita Patel', role: 'Test Lead', text: 'Great website for selenium practice. The UI interactions are similar to real-world e-commerce applications.', stars: 4, initial: 'A' },
             ].map((t, i) => (
               <div key={i} className="testimonial-card">
                 <div className="testimonial-stars">{'★'.repeat(t.stars)}</div>
