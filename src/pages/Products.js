@@ -20,6 +20,7 @@ function Toast({ message, onClose }) {
 export default function Products() {
   const { category } = useParams();
   const [search, setSearch] = useState('');
+  const [appliedSearch, setAppliedSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(category ? category.charAt(0).toUpperCase() + category.slice(1) : 'All');
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('All');
@@ -54,10 +55,10 @@ export default function Products() {
   };
 
   let filtered = products;
-  if (search) {
+  if (appliedSearch) {
     filtered = filtered.filter(p =>
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.category.toLowerCase().includes(search.toLowerCase())
+      p.name.toLowerCase().includes(appliedSearch.toLowerCase()) ||
+      p.category.toLowerCase().includes(appliedSearch.toLowerCase())
     );
   }
   if (selectedCategory && selectedCategory !== 'All') {
@@ -120,9 +121,13 @@ export default function Products() {
               type="text"
               placeholder="Search for products..."
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={e => {
+                setSearch(e.target.value);
+                if (e.target.value === '') setAppliedSearch('');
+              }}
+              onKeyDown={e => { if (e.key === 'Enter') setAppliedSearch(search); }}
             />
-            <button><FiSearch /> Search</button>
+            <button onClick={() => setAppliedSearch(search)}><FiSearch /> Search</button>
           </div>
         </div>
       </div>
@@ -222,7 +227,8 @@ export default function Products() {
                 <button
                   className="btn-primary"
                   onClick={() => { 
-                    setSearch(''); 
+                    setSearch('');
+                    setAppliedSearch(''); 
                     setSelectedCategory('All'); 
                     setSelectedSubcategory('');
                     setSelectedBrand('All');
